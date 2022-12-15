@@ -1,3 +1,6 @@
+import time
+
+
 def find_index(num_of_str, max_freq_signal, signals_longitude, signals_latitude):
     freq_signals_latitude = []                                                  #создаем список широт сигналов
     for i in range(int(num_of_str)):                                            #проходим по всем элементам
@@ -37,11 +40,7 @@ def main():
             signals_latitude.append(tmp[0])                                     #записываем широты
             signals_longitude.append(tmp[1])                                    #записываем долготы
 
-    signals_longitude_set = set()                                               #создаем множество долгот
-    for i in range(len(signals_longitude)):                                     #проходимся по всем долготам
-        signals_longitude_set.add(signals_longitude[i])                         #записываем их в множество
-
-    signals_longitude_set = list(signals_longitude_set)                         #переводим множество в список
+    signals_longitude_set = list(set(signals_longitude))                        #создаем список уникальных долгот
 
     freq_max = find_max_freq(signals_longitude_set, signals_longitude)          #переменная для хранения максимальной частоты
 
@@ -61,4 +60,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    meantime = []
+    for i in range(3):
+        start_time = time.time()
+        main()
+        meantime.append(time.time() - start_time)
+    print("--- Mean Time: %s seconds ---" % (sum(meantime)/3))
